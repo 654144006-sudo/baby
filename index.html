@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Anniversary 💖</title>
+  <style>
+    body {
+      font-family: "Prompt", "Arial", sans-serif;
+      background: linear-gradient(180deg,#ffd6e8,#ffcfe1);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #ff99bb;
+      color: #fff;
+      padding: 15px;
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    main {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+    }
+
+    h2 {
+      margin: 10px 0;
+      color: #d6336c;
+    }
+
+    /* การ์ด */
+    .card {
+      background: #fff0f5;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* pill */
+    .pill {
+      display: inline-block;
+      background: #ffb6c1;
+      padding: 8px 16px;
+      margin: 4px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    /* ปุ่ม */
+    button {
+      padding: 8px 16px;
+      margin: 5px;
+      border: none;
+      border-radius: 20px;
+      background: #ff6699;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: #ff3366;
+      transform: translateY(-2px);
+    }
+
+    /* ไทม์ไลน์ */
+    #timelineList .t {
+      background: #ffe4ec;
+      margin: 8px auto;
+      padding: 12px;
+      border-radius: 12px;
+      max-width: 500px;
+      text-align: left;
+    }
+    #timelineList time { 
+      color: #d6336c; 
+      font-weight: bold; 
+      margin-right: 8px;
+    }
+
+    /* แกลเลอรี */
+    #galleryGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    #galleryGrid img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    /* textarea */
+    textarea {
+      width: 90%;
+      height: 100px;
+      margin: 10px 0;
+      border-radius: 12px;
+      padding: 10px;
+      border: 1px solid #f5a3c1;
+      font-family: inherit;
+      resize: none;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      background: #ff99cc;
+      color: white;
+      text-align: center;
+    }
+
+    /* overlay */
+    #overlay {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:#fff;
+      z-index:9999;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+    }
+    #passwordBox { display:none; margin-top:20px; }
+    #passwordError { color:red; display:none; margin-top:10px; }
+
+    /* หัวใจลอย */
+    .float-heart {
+      position: fixed;
+      animation: floatUp linear forwards;
+    }
+    @keyframes floatUp {
+      from { transform:translateY(0); opacity:1; }
+      to { transform:translateY(-100vh); opacity:0; }
+    }
+  /* --- existing styles --- */
+
+  /* เวอร์ชันมือถือ */
+  /* เวอร์ชันมือถือ */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  header {
+    font-size: 18px;
+    padding: 12px;
+  }
+
+  main {
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .card {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  #galleryGrid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+  }
+
+  #galleryGrid img,
+  #galleryGrid video {
+    border-radius: 10px;
+  }
+
+  .pill {
+    padding: 6px 12px;
+    margin: 2px;
+    font-size: 12px;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  textarea {
+    width: 100%;
+    height: 80px;
+    font-size: 14px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- overlay -->
+  <div id="overlay">
+    <h2 id="overlayCountdown"></h2>
+    <div id="passwordBox">
+      <input type="password" id="passwordInput" placeholder="ใส่รหัสผ่าน">
+      <button onclick="checkPassword()">เข้าสู่เว็บ</button>
+      <div id="passwordError">รหัสไม่ถูกต้อง</div>
+    </div>
+  </div>
+
+  <header>
+    💕 ครบรอบของ <span id="youName"></span> & <span id="herName"></span> 💕
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>⏳ นับถอยหลัง</h2>
+      <div id="countdown"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎶 เพลงของเรา</h2>
+      <audio id="bgm" loop></audio>
+      <button id="playMusic">เปิดเพลง</button>
+    </div>
+
+    <div class="card">
+      <h2>📜 ไทม์ไลน์ความรัก</h2>
+      <div id="timelineList"></div>
+    </div>
+
+    <div class="card">
+      <h2>📷 แกลเลอรี</h2>
+      <div id="galleryGrid"></div>
+    </div>
+
+    <div class="card">
+      <h2>💌 ข้อความจากใจ</h2>
+      <textarea id="noteArea" placeholder="สุขสันต์วันครบรอบนะคับที่รัก 2เดือนแย้ววว เค้าขอให้ที่รักอยู่กะเค้าไปนานๆนะ ห้ามทิ้งเค้าไปไหนเด็ดขาดดดดดด เค้าทำตัวไม่น่ารักเค้าขอโทษนะค้าบบบบ รักนะค้าบบที่รัก(แหนของเค้าน่ารักมากกกกกก)😘🥰💖😘"></textarea><br>
+      <button onclick="saveNote()">บันทึก</button>
+      <button onclick="clearNote()">ล้างข้อความ</button>
+    </div>
+  </main>
+
+  <footer>
+    © <span id="year"></span> With Love 💖
+  </footer>
+
+  <script>
+    // ---- Config ----
+    const SITE_PASSWORD = "290668";  
+    const YOU_NAME = "ดีม";
+    const HER_NAME = "แพรว";
+    const ANNIVERSARY = "2025-06-29 23:59:59";
+    const MUSIC_FILE = "babymu1.mp3"; 
+    const TIMELINE = [
+      { date: "2025-05-15", text: "เจอกันครั้งแรก เขินสุด ๆ" },
+      { date: "2025-06-29", text: "คบกับแฟนเป็นวันแรก" },
+      { date: "2025-07-29", text: "ครบรอบ1M" },
+      { date: "2025-08-29", text: "ครบรอบ2M" },
+    ];
+    const GALLERY = ["baby01.jpg","baby02.jpg","baby03.jpg","baby04.jpg","baby05.jpg","baby06.jpg","baby07.jpg","baby08.jpg","baby09.jpg","baby10.jpg","baby11.jpg","baby12.jpg"];
+    
+    const $ = (q) => document.querySelector(q);
+
+    // overlay
+    function initOverlay(){
+      const countdownBox = document.getElementById("overlayCountdown");
+      const passwordBox = document.getElementById("passwordBox");
+      function updateOverlay(){
+        const target = new Date(ANNIVERSARY.replace(" ", "T"));
+        const now = new Date();
+        const diff = target - now;
+        if(diff > 0){
+          const sec = Math.floor(diff/1000)%60;
+          const min = Math.floor(diff/1000/60)%60;
+          const hr = Math.floor(diff/1000/60/60)%24;
+          const day = Math.floor(diff/1000/60/60/24);
+          countdownBox.innerHTML = `อีก ${day} วัน ${hr} ชั่วโมง ${min} นาที ${sec} วินาที`;
+        } else {
+          countdownBox.textContent = "ถึงวันครบรอบแล้ว 💖";
+          passwordBox.style.display = "block";
+        }
+      }
+      updateOverlay();
+      setInterval(updateOverlay, 1000);
+    }
+
+    function checkPassword(){
+      const input = document.getElementById("passwordInput").value;
+      if(input === SITE_PASSWORD){
+        document.getElementById("overlay").style.display = "none";
+      } else {
+        document.getElementById("passwordError").style.display = "block";
+      }
+    }
+
+    function initNames(){
+      $("#youName").textContent = YOU_NAME;
+      $("#herName").textContent = HER_NAME;
+      $("#year").textContent = new Date().getFullYear();
+    }
+
+    function initMusic(){
+      const audio = $("#bgm");
+      if(MUSIC_FILE){
+        const src = document.createElement("source");
+        src.src = `assets/${MUSIC_FILE}`;
+        src.type = "audio/mpeg";
+        audio.appendChild(src);
+      }
+      $("#playMusic").addEventListener("click", ()=>{
+        if(audio.paused){ audio.play(); $("#playMusic").textContent = "หยุดเพลง"; }
+        else { audio.pause(); $("#playMusic").textContent = "เปิดเพลง"; }
+      });
+    }
+
+    function initTimeline(){
+      const wrap = $("#timelineList");
+      TIMELINE.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "t";
+        row.innerHTML = `<time>${item.date}</time><span>${item.text}</span>`;
+        wrap.appendChild(row);
+      });
+    }
+
+    function initGallery(){
+      const grid = $("#galleryGrid");
+      GALLERY.forEach(name=>{
+        const img = document.createElement("img");
+        img.src = `assets/${name}`;
+        grid.appendChild(img);
+      });
+    }
+
+    function initCountdown(){
+      const box = $("#countdown");
+      function update(){
+        const target = new Date(ANNIVERSARY.replace(' ','T'));
+        const now = new Date();
+        const diff = target - now;
+        if(diff <= 0){
+          box.textContent = "สุขสันต์วันครบรอบน้า ❤";
+          return;
+        }
+        const sec = Math.floor(diff/1000)%60;
+        const min = Math.floor(diff/1000/60)%60;
+        const hr = Math.floor(diff/1000/60/60)%24;
+        const day = Math.floor(diff/1000/60/60/24);
+        box.innerHTML = `
+          <div class="pill">อีก ${day} วัน</div>
+          <div class="pill">${hr} ชั่วโมง</div>
+          <div class="pill">${min} นาที</div>
+          <div class="pill">${sec} วินาที</div>
+        `;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    function saveNote(){
+      localStorage.setItem("love-note", $("#noteArea").value || "");
+      alert("บันทึกเรียบร้อย ❤");
+    }
+    function clearNote(){
+      $("#noteArea").value = "";
+      localStorage.removeItem("love-note");
+    }
+    function loadNote(){
+      const saved = localStorage.getItem("love-note");
+      if(saved) $("#noteArea").value = saved;
+    }
+
+    // หัวใจลอย
+    function randomBetween(min, max){ return Math.random()*(max-min)+min; }
+    function spawnHearts(){
+      for(let i=0;i<12;i++){
+        const h = document.createElement("img");
+        h.className = "float-heart";
+        h.src = "assets/heart.svg";
+        h.style.left = `${randomBetween(10, 90)}%`;
+        h.style.bottom = "-20px";
+        h.style.width = `${randomBetween(16, 32)}px`;
+        h.style.animationDuration = `${randomBetween(4, 7)}s`;
+        document.body.appendChild(h);
+        setTimeout(()=> h.remove(), 7000);
+      }
+    }
+    setInterval(spawnHearts, 2000);
+
+    // init
+    document.addEventListener("DOMContentLoaded", ()=>{
+      initNames();
+      initMusic();
+      initTimeline();
+      initGallery();
+      initCountdown();
+      loadNote();
+      initOverlay();
+    });
+  </script>
+</body>
+</html>
